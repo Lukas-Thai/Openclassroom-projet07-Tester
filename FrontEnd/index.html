@@ -9,6 +9,7 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 <header>
@@ -17,7 +18,7 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li>login</li>
+			<li><a href="login.html" id="login-link">login</a></li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -35,53 +36,11 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="gallery">
-			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
-				<figcaption>Appartement Paris V</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
-				<figcaption>Restaurant Sushisen - Londres</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
-				<figcaption>Villa “La Balisiere” - Port Louis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
-				<figcaption>Structures Thermopolis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
-				<figcaption>Appartement Paris X</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
-				<figcaption>Pavillon “Le coteau” - Cassis</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
-				<figcaption>Villa Ferneze - Isola d’Elba</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
-				<figcaption>Appartement Paris XVIII</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
-				<figcaption>Bar “Lullaby” - Paris</figcaption>
-			</figure>
-			<figure>
-				<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
-				<figcaption>Hotel First Arte - New Delhi</figcaption>
-			</figure>
+		<div class="portfolio-header">
+			<h2>Mes Projets</h2>
 		</div>
+		<div class="filters"></div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
@@ -105,5 +64,51 @@
 		</ul>
 	</nav>
 </footer>
+
+<aside id="modal" class="modal" aria-hidden="true" role="dialog">
+	<div class="modal-box">
+		<!-- Vue 1 : galerie des travaux (suppression) -->
+		<div id="modal-gallery-view" class="modal-view">
+			<button class="modal-close js-modal-close" aria-label="Fermer la fenêtre">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+			<h3>Galerie photo</h3>
+			<div class="modal-gallery"></div>
+			<hr>
+			<button class="modal-add-btn js-open-add">Ajouter une photo</button>
+		</div>
+
+		<!-- Vue 2 : formulaire d'ajout -->
+		<div id="modal-add-view" class="modal-view" style="display: none;">
+			<button class="modal-back js-modal-back" aria-label="Revenir à la galerie">
+				<i class="fa-solid fa-arrow-left"></i>
+			</button>
+			<button class="modal-close js-modal-close" aria-label="Fermer la fenêtre">
+				<i class="fa-solid fa-xmark"></i>
+			</button>
+			<h3>Ajout photo</h3>
+			<form id="add-photo-form">
+				<div class="upload-zone">
+					<div class="upload-placeholder">
+						<i class="fa-regular fa-image"></i>
+						<label for="image" class="upload-label">+ Ajouter photo</label>
+						<input type="file" id="image" name="image" accept="image/png, image/jpeg" hidden>
+						<p>jpg, png : 4mo max</p>
+					</div>
+					<img id="image-preview" alt="Aperçu de la photo" hidden>
+				</div>
+				<label for="title">Titre</label>
+				<input type="text" id="title" name="title">
+				<label for="category">Catégorie</label>
+				<select id="category" name="category"></select>
+				<p class="form-error" aria-live="polite"></p>
+				<hr>
+				<input type="submit" class="submit-btn" value="Valider">
+			</form>
+		</div>
+	</div>
+</aside>
+
+<script src="./assets/script.js"></script>
 </body>
 </html>
