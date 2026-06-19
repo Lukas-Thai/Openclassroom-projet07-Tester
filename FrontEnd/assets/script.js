@@ -7,6 +7,10 @@ const filtersContainer = document.querySelector(".filters");
 let allWorks = [];
 let allCategories = [];
 
+// Formats d'image et taille maximale autorisés pour l'ajout d'un travail
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png"];
+const MAX_IMAGE_SIZE = 4 * 1024 * 1024; // 4 Mo
+
 
 // Récupère la liste des travaux depuis l'API
 async function getWorks() {
@@ -239,12 +243,23 @@ function displayCategoryOptions() {
 	});
 }
 
+// Vérifie que le fichier est un jpg/png de 4 Mo maximum, sinon retourne un message d'erreur
+function getImageError(file) {
+	if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+		return "Format non autorisé. Veuillez choisir une image jpg ou png.";
+	}
+	if (file.size > MAX_IMAGE_SIZE) {
+		return "Image trop volumineuse. La taille maximale est de 4 Mo.";
+	}
+	return "";
+}
+
 // Vérifie que l'image, le titre et la catégorie sont renseignés
 function isFormValid() {
 	const image = document.querySelector("#image").files[0];
 	const title = document.querySelector("#title").value.trim();
 	const category = document.querySelector("#category").value;
-	return Boolean(image) && title !== "" && category !== "";
+	return Boolean(image) && getImageError(image) === "" && title !== "" && category !== "";
 }
 
 // Active ou désactive le bouton de validation selon l'état du formulaire
@@ -269,9 +284,24 @@ function resetAddForm() {
 
 // Affiche l'aperçu de l'image sélectionnée par l'utilisateur
 function handleImageChange() {
-	const file = document.querySelector("#image").files[0];
+	const input = document.querySelector("#image");
+	const file = input.files[0];
 	if (!file) return;
 
+	const formError = document.querySelector(".form-error");
+	const imageError = getImageError(file);
+	if (imageError) {
+		formError.textContent = imageError;
+		input.value = "";
+		const preview = document.querySelector("#image-preview");
+		preview.hidden = true;
+		preview.removeAttribute("src");
+		document.querySelector(".upload-placeholder").hidden = false;
+		updateSubmitState();
+		return;
+	}
+
+	formError.textContent = "";
 	const preview = document.querySelector("#image-preview");
 	preview.src = URL.createObjectURL(file);
 	preview.hidden = false;
