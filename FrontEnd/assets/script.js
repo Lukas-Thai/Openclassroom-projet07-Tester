@@ -372,6 +372,9 @@ async function setupModal() {
 	document.querySelector(".js-modal-back").addEventListener("click", showGalleryView);
 
 	document.querySelector("#image").addEventListener("change", handleImageChange);
+	document.querySelector("#image-preview").addEventListener("click", () => {
+		document.querySelector("#image").click();
+	});
 	document.querySelector("#title").addEventListener("input", updateSubmitState);
 	document.querySelector("#category").addEventListener("change", updateSubmitState);
 	document.querySelector("#add-photo-form").addEventListener("submit", handleAddPhotoSubmit);
